@@ -30,6 +30,41 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
+// GET /api/search/combined — combined text + location + filters search
+router.get('/combined', async (req: Request, res: Response) => {
+  try {
+    const query = req.query.q as string | undefined;
+    const vehicleTypes = req.query.vehicleTypes
+      ? (req.query.vehicleTypes as string).split(',')
+      : undefined;
+    const services = req.query.services
+      ? (req.query.services as string).split(',')
+      : undefined;
+    const priceRange = req.query.priceRange as string | undefined;
+    const verifiedOnly = req.query.verifiedOnly === 'true';
+    const lat = req.query.lat ? parseFloat(req.query.lat as string) : undefined;
+    const lng = req.query.lng ? parseFloat(req.query.lng as string) : undefined;
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+
+    const result = await searchService.combinedSearch({
+      query,
+      vehicleTypes,
+      services,
+      priceRange,
+      verifiedOnly,
+      lat,
+      lng,
+      page,
+      limit,
+    });
+
+    res.json(result);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // GET /api/search/nearby — location-based search
 router.get('/nearby', async (req: Request, res: Response) => {
   try {

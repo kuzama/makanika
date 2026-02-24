@@ -3,9 +3,22 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import MechanicsListPage from '../app/mechanics/page';
 
+// Mock next/navigation
+const mockPush = jest.fn();
+const mockReplace = jest.fn();
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: mockPush,
+    replace: mockReplace,
+  }),
+  useSearchParams: () => new URLSearchParams(),
+  usePathname: () => '/mechanics',
+}));
+
 jest.mock('../lib/api', () => ({
   api: {
     getMechanics: jest.fn(),
+    searchMechanics: jest.fn(),
     sendCode: jest.fn(),
     verifyCode: jest.fn(),
   },
@@ -27,8 +40,8 @@ const mechanicsList = {
       longitude: 31.0522,
       address: '123 Samora Machel Ave',
       description: 'General repairs',
-      priceRange: 'MODERATE',
-      verificationStatus: 'VERIFIED',
+      priceRange: 'MODERATE' as const,
+      verificationStatus: 'VERIFIED' as const,
       vehicleTypes: ['CAR'],
       services: ['Oil Change'],
       specialties: ['Toyota'],
@@ -44,8 +57,8 @@ const mechanicsList = {
       longitude: 31.05,
       address: '456 Julius Nyerere Way',
       description: 'Truck specialists',
-      priceRange: 'PREMIUM',
-      verificationStatus: 'UNVERIFIED',
+      priceRange: 'PREMIUM' as const,
+      verificationStatus: 'UNVERIFIED' as const,
       vehicleTypes: ['TRUCK'],
       services: ['Engine Overhaul'],
       specialties: ['Mercedes'],
@@ -62,6 +75,7 @@ const mechanicsList = {
 describe('MechanicsListPage', () => {
   beforeEach(() => {
     mockGetMechanics.mockReset();
+    mockPush.mockReset();
   });
 
   it('renders mechanic cards after loading', async () => {
@@ -80,6 +94,7 @@ describe('MechanicsListPage', () => {
 
     render(<MechanicsListPage />);
 
+    // The loading skeletons are rendered with aria-hidden, so check for the sr-only text
     expect(screen.getByText(/loading/i)).toBeInTheDocument();
   });
 
@@ -104,13 +119,15 @@ describe('MechanicsListPage', () => {
     render(<MechanicsListPage />);
 
     await waitFor(() => {
-      expect(screen.getByPlaceholderText(/search/i)).toBeInTheDocument();
+      expect(screen.getAllByPlaceholderText(/search mechanics/i).length).toBeGreaterThan(0);
     });
 
-    const searchInput = screen.getByPlaceholderText(/search/i);
+    // Get the classic search input (the second one, inside the main content area)
+    const searchInputs = screen.getAllByPlaceholderText(/search mechanics/i);
+    const searchInput = searchInputs[searchInputs.length - 1];
     await userEvent.type(searchInput, 'Toyota');
 
-    const searchButton = screen.getByRole('button', { name: /search/i });
+    const searchButton = screen.getByRole('button', { name: /^search$/i });
     await userEvent.click(searchButton);
 
     await waitFor(() => {

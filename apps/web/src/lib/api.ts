@@ -49,6 +49,18 @@ export interface GetMechanicsParams {
   search?: string;
 }
 
+export interface SearchMechanicsParams {
+  query?: string;
+  vehicleTypes?: string[];
+  services?: string[];
+  priceRange?: string;
+  verifiedOnly?: boolean;
+  lat?: number;
+  lng?: number;
+  page?: number;
+  limit?: number;
+}
+
 export const api = {
   async sendCode(phone: string): Promise<SendCodeResponse> {
     const res = await fetch(`${API_URL}/auth/send-code`, {
@@ -82,6 +94,22 @@ export const api = {
 
   async getMechanicById(id: string): Promise<Mechanic> {
     const res = await fetch(`${API_URL}/mechanics/${id}`);
+    return res.json();
+  },
+
+  async searchMechanics(params: SearchMechanicsParams = {}): Promise<MechanicsResponse> {
+    const searchParams = new URLSearchParams();
+    if (params.query) searchParams.set('q', params.query);
+    if (params.vehicleTypes?.length) searchParams.set('vehicleTypes', params.vehicleTypes.join(','));
+    if (params.services?.length) searchParams.set('services', params.services.join(','));
+    if (params.priceRange) searchParams.set('priceRange', params.priceRange);
+    if (params.verifiedOnly) searchParams.set('verifiedOnly', 'true');
+    if (params.lat !== undefined) searchParams.set('lat', params.lat.toString());
+    if (params.lng !== undefined) searchParams.set('lng', params.lng.toString());
+    if (params.page) searchParams.set('page', params.page.toString());
+    if (params.limit) searchParams.set('limit', params.limit.toString());
+
+    const res = await fetch(`${API_URL}/search/combined?${searchParams.toString()}`);
     return res.json();
   },
 };
