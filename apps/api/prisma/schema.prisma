@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @default(uuid())
+  phone           String    @unique
+  name            String?
+  role            Role      @default(CUSTOMER)
+  isPhoneVerified Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  reviews          Review[]
+  mechanicListings Mechanic[] @relation("ListedBy")
+  mechanicProfile  Mechanic?  @relation("MechanicUser")
+}
+
+enum Role {
+  CUSTOMER
+  MECHANIC
+  ADMIN
+}
+
+model Mechanic {
+  id                 String             @id @default(uuid())
+  businessName       String
+  phone              String
+  latitude           Float
+  longitude          Float
+  address            String?
+  description        String?
+  priceRange         PriceRange         @default(MODERATE)
+
+  // Verification
+  verificationStatus VerificationStatus @default(UNVERIFIED)
+  verificationDocs   String[]
+  verifiedAt         DateTime?
+
+  // Categorization
+  vehicleTypes       VehicleType[]
+  services           String[]
+  specialties        String[]
+
+  // Photos
+  photos             String[]
+
+  // Relations
+  userId             String?            @unique
+  user               User?              @relation("MechanicUser", fields: [userId], references: [id])
+  listedById         String?
+  listedBy           User?              @relation("ListedBy", fields: [listedById], references: [id])
+  reviews            Review[]
+
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+}
+
+enum PriceRange {
+  BUDGET
+  MODERATE
+  PREMIUM
+}
+
+enum VerificationStatus {
+  UNVERIFIED
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum VehicleType {
+  CAR
+  TRUCK
+  MOTORCYCLE
+  HEAVY_PLANT
+  BUS
+  OTHER
+}
+
+model Review {
+  id         String   @id @default(uuid())
+  rating     Int
+  comment    String?
+  authorId   String
+  author     User     @relation(fields: [authorId], references: [id])
+  mechanicId String
+  mechanic   Mechanic @relation(fields: [mechanicId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([authorId, mechanicId])
+}
