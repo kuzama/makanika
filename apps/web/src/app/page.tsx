@@ -6,8 +6,8 @@ export default function Home() {
       {/* Header */}
       <header className="bg-white shadow-sm" role="banner">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-green-700" aria-label="Harare Mechanic Finder Home">
-            Harare Mechanic Finder
+          <Link href="/" className="text-2xl font-bold text-green-700" aria-label="Makanika Home">
+            Makanika
           </Link>
           <nav className="flex gap-4" aria-label="Main navigation">
             <Link
@@ -73,7 +73,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-gray-50 border-t mt-12 md:mt-16" role="contentinfo">
         <div className="max-w-6xl mx-auto px-4 py-8 text-center text-gray-500">
-          <p>Harare Mechanic Finder</p>
+          <p>Makanika</p>
         </div>
       </footer>
     </div>

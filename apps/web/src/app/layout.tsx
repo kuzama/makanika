@@ -14,17 +14,17 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Harare Mechanic Finder",
-    template: "%s | Harare Mechanic Finder",
+    default: "Makanika",
+    template: "%s | Makanika",
   },
   description: "Find trusted, verified mechanics in Harare. Search by location, vehicle type, and speciality.",
   keywords: ["mechanic", "Harare", "Zimbabwe", "auto repair", "car repair", "vehicle", "garage"],
   openGraph: {
-    title: "Harare Mechanic Finder",
+    title: "Makanika",
     description: "Find trusted, verified mechanics in Harare. Search by location, vehicle type, and speciality.",
     type: "website",
     locale: "en_ZW",
-    siteName: "Harare Mechanic Finder",
+    siteName: "Makanika",
   },
   robots: {
     index: true,

@@ -63,7 +63,7 @@ export class AuthService {
 
     await this.whatsapp.sendMessage(
       normalized,
-      `Your Mechanic Finder verification code is: ${code}`
+      `Your Makanika verification code is: ${code}`
     );
 
     return { success: true };
