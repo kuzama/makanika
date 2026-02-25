@@ -16,6 +16,19 @@ interface VerifyCodeResponse {
   error?: string;
 }
 
+interface GoogleLoginResponse {
+  success: boolean;
+  token?: string;
+  user?: {
+    id: string;
+    email?: string;
+    name?: string;
+    role: string;
+    image?: string;
+  };
+  error?: string;
+}
+
 export interface Mechanic {
   id: string;
   businessName: string;
@@ -76,6 +89,15 @@ export const api = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ phone, code }),
+    });
+    return res.json();
+  },
+
+  async googleLogin(credential: string): Promise<GoogleLoginResponse> {
+    const res = await fetch(`${API_URL}/auth/google`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ credential }),
     });
     return res.json();
   },

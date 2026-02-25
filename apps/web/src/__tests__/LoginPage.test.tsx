@@ -3,11 +3,19 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import LoginPage from '../app/login/page';
 
+// Mock next/script to render children without loading external scripts
+jest.mock('next/script', () => {
+  return function MockScript(props: any) {
+    return null;
+  };
+});
+
 // Mock the API client
 jest.mock('../lib/api', () => ({
   api: {
     sendCode: jest.fn(),
     verifyCode: jest.fn(),
+    googleLogin: jest.fn(),
   },
 }));
 
@@ -15,11 +23,13 @@ import { api } from '../lib/api';
 
 const mockSendCode = api.sendCode as jest.MockedFunction<typeof api.sendCode>;
 const mockVerifyCode = api.verifyCode as jest.MockedFunction<typeof api.verifyCode>;
+const mockGoogleLogin = api.googleLogin as jest.MockedFunction<typeof api.googleLogin>;
 
 describe('LoginPage', () => {
   beforeEach(() => {
     mockSendCode.mockReset();
     mockVerifyCode.mockReset();
+    mockGoogleLogin.mockReset();
   });
 
   it('renders phone input initially', () => {
@@ -27,6 +37,18 @@ describe('LoginPage', () => {
 
     expect(screen.getByPlaceholderText(/phone/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /send code/i })).toBeInTheDocument();
+  });
+
+  it('renders Google sign-in button container', () => {
+    render(<LoginPage />);
+
+    expect(document.getElementById('google-signin-button')).toBeInTheDocument();
+  });
+
+  it('renders "or" divider between Google and phone login', () => {
+    render(<LoginPage />);
+
+    expect(screen.getByText('or')).toBeInTheDocument();
   });
 
   it('sends code when phone is submitted', async () => {
@@ -117,5 +139,29 @@ describe('LoginPage', () => {
     await waitFor(() => {
       expect(screen.getByText(/invalid/i)).toBeInTheDocument();
     });
+  });
+
+  it('handles Google login API success', async () => {
+    mockGoogleLogin.mockResolvedValue({
+      success: true,
+      token: 'google-jwt-token',
+      user: { id: 'user-2', email: 'test@gmail.com', name: 'Test User', role: 'CUSTOMER' },
+    });
+
+    const result = await api.googleLogin('fake-google-credential');
+    expect(result.success).toBe(true);
+    expect(result.token).toBe('google-jwt-token');
+    expect(mockGoogleLogin).toHaveBeenCalledWith('fake-google-credential');
+  });
+
+  it('handles Google login API failure', async () => {
+    mockGoogleLogin.mockResolvedValue({
+      success: false,
+      error: 'Google token expired or invalid. Please try again.',
+    });
+
+    const result = await api.googleLogin('expired-credential');
+    expect(result.success).toBe(false);
+    expect(result.error).toContain('expired');
   });
 });

@@ -9,7 +9,10 @@ datasource db {
 
 model User {
   id              String    @id @default(uuid())
-  phone           String    @unique
+  phone           String?   @unique
+  email           String?   @unique
+  googleId        String?   @unique
+  image           String?
   name            String?
   role            Role      @default(CUSTOMER)
   isPhoneVerified Boolean   @default(false)
