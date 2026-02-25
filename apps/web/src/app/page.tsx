@@ -1,30 +1,10 @@
 import Link from 'next/link';
+import Header from '../components/Header';
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white">
-      {/* Header */}
-      <header className="bg-white shadow-sm" role="banner">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-green-700" aria-label="Makanika Home">
-            Makanika
-          </Link>
-          <nav className="flex gap-4" aria-label="Main navigation">
-            <Link
-              href="/mechanics"
-              className="text-gray-600 hover:text-green-600 font-medium"
-            >
-              Browse Mechanics
-            </Link>
-            <Link
-              href="/login"
-              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 font-medium"
-            >
-              Login
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <main className="max-w-6xl mx-auto px-4 py-12 md:py-16">

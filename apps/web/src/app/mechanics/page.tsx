@@ -7,6 +7,7 @@ import MechanicCard from '../../components/MechanicCard';
 import MechanicCardSkeleton from '../../components/MechanicCardSkeleton';
 import SearchBar from '../../components/SearchBar';
 import FilterPanel from '../../components/FilterPanel';
+import Header from '../../components/Header';
 
 function MechanicsContent() {
   const router = useRouter();
@@ -55,6 +56,7 @@ function MechanicsContent() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Header />
       <div className="max-w-6xl mx-auto p-4">
         {/* Header */}
         <header className="mb-6">
@@ -150,6 +152,7 @@ export default function MechanicsListPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gray-50">
+        <Header />
         <div className="max-w-6xl mx-auto p-4">
           <div className="animate-pulse h-8 w-64 bg-gray-200 rounded mb-6" />
           <div className="space-y-4">
