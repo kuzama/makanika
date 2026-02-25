@@ -45,7 +45,7 @@ export default function Home() {
         </div>
 
         {/* Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           <div className="bg-white rounded-xl p-6 md:p-8 shadow-md border border-gray-100">
             <div className="text-4xl mb-4" aria-hidden="true">📍</div>
             <h2 className="text-xl font-semibold mb-2">Find Nearby</h2>
@@ -66,23 +66,6 @@ export default function Home() {
             <p className="text-gray-600">
               See what other customers say. Honest ratings and reviews help you choose the right mechanic.
             </p>
-          </div>
-        </div>
-
-        {/* Vehicle Types */}
-        <div className="bg-white rounded-xl p-6 md:p-8 shadow-md border border-gray-100 text-center">
-          <h2 className="text-2xl font-semibold mb-6">All Vehicle Types Covered</h2>
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-            {['Cars', 'Trucks', 'Motorcycles', 'Heavy Plant', 'Buses'].map(
-              (type) => (
-                <span
-                  key={type}
-                  className="bg-green-50 text-green-700 px-4 py-2 rounded-full font-medium text-sm md:text-base"
-                >
-                  {type}
-                </span>
-              )
-            )}
           </div>
         </div>
       </main>
