@@ -11,7 +11,7 @@ export interface CreateMechanicInput {
   vehicleTypes: string[];
   services: string[];
   specialties: string[];
-  listedById: string;
+  listedById?: string;
   userId?: string;
 }
 

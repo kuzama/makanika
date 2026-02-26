@@ -31,10 +31,12 @@ describe('AddMechanicPage', () => {
     localStorage.clear();
   });
 
-  it('redirects to login when not authenticated', () => {
+  it('renders the form without authentication', () => {
     render(<AddMechanicPage />);
 
-    expect(mockPush).toHaveBeenCalledWith('/login');
+    expect(screen.getByText('Add a Car Mechanic')).toBeInTheDocument();
+    expect(screen.getByLabelText(/business name/i)).toBeInTheDocument();
+    expect(mockPush).not.toHaveBeenCalled();
   });
 
   it('renders the form when authenticated', () => {
@@ -46,8 +48,7 @@ describe('AddMechanicPage', () => {
     expect(screen.getByLabelText(/business name/i)).toBeInTheDocument();
   });
 
-  it('submits form and redirects to dashboard on success', async () => {
-    localStorage.setItem('token', 'test-token');
+  it('submits form and redirects to mechanics page on success', async () => {
     api.createMechanic.mockResolvedValue({ id: '123', businessName: 'Test' });
 
     render(<AddMechanicPage />);
@@ -61,12 +62,11 @@ describe('AddMechanicPage', () => {
 
     await waitFor(() => {
       expect(api.createMechanic).toHaveBeenCalled();
-      expect(mockPush).toHaveBeenCalledWith('/dashboard?created=1');
+      expect(mockPush).toHaveBeenCalledWith('/mechanics?created=1');
     });
   });
 
   it('shows error on API failure', async () => {
-    localStorage.setItem('token', 'test-token');
     api.createMechanic.mockRejectedValue(new Error('Phone format is invalid'));
 
     render(<AddMechanicPage />);

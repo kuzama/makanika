@@ -29,16 +29,15 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST /api/mechanics — auth required
+// POST /api/mechanics — public (auth optional, links listing to user if logged in)
 export async function POST(request: NextRequest) {
   const auth = verifyToken(request);
-  if (!auth) return unauthorizedResponse();
 
   try {
     const body = await request.json();
     const mechanic = await mechanicService.create({
       ...body,
-      listedById: auth.userId,
+      listedById: auth?.userId,
     });
 
     return NextResponse.json(mechanic, { status: 201 });

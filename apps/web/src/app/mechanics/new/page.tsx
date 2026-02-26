@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Header from '../../../components/Header';
 import MechanicForm from '../../../components/MechanicForm';
@@ -8,32 +8,20 @@ import { api, CreateMechanicInput } from '../../../lib/api';
 
 export default function AddMechanicPage() {
   const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/login');
-      return;
-    }
-    setIsAuthenticated(true);
-  }, [router]);
 
   const handleSubmit = async (data: CreateMechanicInput) => {
     setLoading(true);
     setError('');
     try {
       await api.createMechanic(data);
-      router.push('/dashboard?created=1');
+      router.push('/mechanics?created=1');
     } catch (err: any) {
       setError(err?.message || 'Failed to create listing. Please try again.');
       setLoading(false);
     }
   };
-
-  if (!isAuthenticated) return null;
 
   return (
     <div className="min-h-screen bg-gray-50">
