@@ -1,5 +1,52 @@
 const API_URL = '/api';
 
+function getAuthHeaders(): Record<string, string> {
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+}
+
+export interface CreateMechanicInput {
+  businessName: string;
+  phone: string;
+  latitude: number;
+  longitude: number;
+  address?: string;
+  description?: string;
+  priceRange?: 'BUDGET' | 'MODERATE' | 'PREMIUM';
+  vehicleTypes?: string[];
+  services?: string[];
+  specialties?: string[];
+}
+
+export interface UpdateMechanicInput extends Partial<CreateMechanicInput> {}
+
+interface MutationResponse {
+  success: boolean;
+  error?: string;
+  [key: string]: any;
+}
+
+interface AdminStats {
+  totalMechanics: number;
+  pendingVerifications: number;
+  verifiedMechanics: number;
+  totalUsers: number;
+  totalReviews: number;
+}
+
+interface PendingMechanic {
+  id: string;
+  businessName: string;
+  phone: string;
+  verificationStatus: string;
+  verificationDocs: string[];
+  listedBy?: { name?: string; phone: string };
+  createdAt: string;
+}
+
 interface SendCodeResponse {
   success: boolean;
   error?: string;
@@ -132,6 +179,97 @@ export const api = {
     if (params.limit) searchParams.set('limit', params.limit.toString());
 
     const res = await fetch(`${API_URL}/search/combined?${searchParams.toString()}`);
+    return res.json();
+  },
+
+  async createMechanic(data: CreateMechanicInput): Promise<Mechanic> {
+    const res = await fetch(`${API_URL}/mechanics`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || 'Failed to create mechanic');
+    }
+    return res.json();
+  },
+
+  async updateMechanic(id: string, data: UpdateMechanicInput): Promise<Mechanic> {
+    const res = await fetch(`${API_URL}/mechanics/${id}`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || 'Failed to update mechanic');
+    }
+    return res.json();
+  },
+
+  async deleteMechanic(id: string): Promise<MutationResponse> {
+    const res = await fetch(`${API_URL}/mechanics/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || 'Failed to delete mechanic');
+    }
+    return res.json();
+  },
+
+  async getMyMechanics(): Promise<Mechanic[]> {
+    const res = await fetch(`${API_URL}/mechanics/mine`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || 'Failed to load your listings');
+    }
+    return res.json();
+  },
+
+  async getAdminStats(): Promise<AdminStats> {
+    const res = await fetch(`${API_URL}/admin/stats`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) {
+      throw new Error('Failed to load admin stats');
+    }
+    return res.json();
+  },
+
+  async getAdminPending(): Promise<PendingMechanic[]> {
+    const res = await fetch(`${API_URL}/admin/verification/pending`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) {
+      throw new Error('Failed to load pending verifications');
+    }
+    return res.json();
+  },
+
+  async adminApprove(id: string): Promise<MutationResponse> {
+    const res = await fetch(`${API_URL}/admin/verification/${id}/approve`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) {
+      throw new Error('Failed to approve mechanic');
+    }
+    return res.json();
+  },
+
+  async adminReject(id: string): Promise<MutationResponse> {
+    const res = await fetch(`${API_URL}/admin/verification/${id}/reject`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) {
+      throw new Error('Failed to reject mechanic');
+    }
     return res.json();
   },
 };

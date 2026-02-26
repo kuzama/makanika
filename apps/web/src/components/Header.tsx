@@ -49,6 +49,26 @@ export default function Header() {
           </Link>
           {user ? (
             <div className="flex items-center gap-3">
+              <Link
+                href="/mechanics/new"
+                className="text-gray-600 hover:text-green-600 font-medium text-sm"
+              >
+                Add Mechanic
+              </Link>
+              <Link
+                href="/dashboard"
+                className="text-gray-600 hover:text-green-600 font-medium text-sm"
+              >
+                Dashboard
+              </Link>
+              {user.role === 'ADMIN' && (
+                <Link
+                  href="/admin"
+                  className="text-gray-600 hover:text-green-600 font-medium text-sm"
+                >
+                  Admin
+                </Link>
+              )}
               {user.image && (
                 <img
                   src={user.image}
