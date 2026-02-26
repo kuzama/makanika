@@ -16,6 +16,7 @@ function MechanicsContent() {
   const [mechanics, setMechanics] = useState<Mechanic[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [search, setSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
@@ -23,15 +24,19 @@ function MechanicsContent() {
   useEffect(() => {
     async function fetchMechanics() {
       setLoading(true);
+      setError('');
       try {
         const params: GetMechanicsParams = { page, limit: 10 };
         if (searchQuery) params.search = searchQuery;
 
         const result = await api.getMechanics(params);
-        setMechanics(result.mechanics);
-        setTotal(result.total);
-      } catch (error) {
-        console.error('Failed to fetch mechanics:', error);
+        setMechanics(result.mechanics || []);
+        setTotal(result.total || 0);
+      } catch (err: any) {
+        console.error('Failed to fetch mechanics:', err);
+        setError(err.message || 'Failed to load mechanics. Please try again.');
+        setMechanics([]);
+        setTotal(0);
       } finally {
         setLoading(false);
       }
@@ -101,8 +106,21 @@ function MechanicsContent() {
               </div>
             )}
 
+            {/* Error State */}
+            {!loading && error && (
+              <div className="text-center py-12" role="alert">
+                <p className="text-red-600 mb-4">{error}</p>
+                <button
+                  onClick={() => setPage(page)}
+                  className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
+                >
+                  Try Again
+                </button>
+              </div>
+            )}
+
             {/* Empty State */}
-            {!loading && mechanics.length === 0 && (
+            {!loading && !error && mechanics.length === 0 && (
               <div className="text-center py-12 text-gray-500" role="status">
                 No mechanics found. Try a different search.
               </div>

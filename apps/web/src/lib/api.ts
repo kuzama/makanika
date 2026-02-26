@@ -158,11 +158,19 @@ export const api = {
     if (params.search) searchParams.set('search', params.search);
 
     const res = await fetch(`${API_URL}/mechanics?${searchParams.toString()}`);
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || 'Failed to fetch mechanics');
+    }
     return res.json();
   },
 
   async getMechanicById(id: string): Promise<Mechanic> {
     const res = await fetch(`${API_URL}/mechanics/${id}`);
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || 'Mechanic not found');
+    }
     return res.json();
   },
 
@@ -179,6 +187,10 @@ export const api = {
     if (params.limit) searchParams.set('limit', params.limit.toString());
 
     const res = await fetch(`${API_URL}/search/combined?${searchParams.toString()}`);
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || 'Search failed');
+    }
     return res.json();
   },
 
