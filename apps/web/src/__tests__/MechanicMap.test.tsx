@@ -39,14 +39,14 @@ const mechanics = [
   },
   {
     id: 'mech-2',
-    businessName: 'Truck Masters',
+    businessName: 'SUV Specialists',
     phone: '+263772345678',
     latitude: -17.83,
     longitude: 31.05,
     address: '456 Julius Nyerere Way',
     priceRange: 'PREMIUM' as const,
     verificationStatus: 'UNVERIFIED' as const,
-    vehicleTypes: ['TRUCK'],
+    vehicleTypes: ['SUV'],
     services: ['Engine Overhaul'],
     specialties: [],
     photos: [],
@@ -77,7 +77,7 @@ describe('MechanicMap', () => {
     render(<MechanicMap mechanics={mechanics} />);
     const popups = screen.getAllByTestId('map-popup');
     expect(popups[0]).toHaveTextContent('Fix-It Garage');
-    expect(popups[1]).toHaveTextContent('Truck Masters');
+    expect(popups[1]).toHaveTextContent('SUV Specialists');
   });
 
   it('renders marker at correct position', () => {

@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Browse Mechanics',
-  description: 'Browse and search for verified mechanics in Harare. Filter by vehicle type, service, and location.',
+  title: 'Browse Car Mechanics',
+  description: 'Browse and search for verified car mechanics in Harare. Filter by car type, service, and location.',
   openGraph: {
-    title: 'Browse Mechanics | Makanika',
-    description: 'Browse and search for verified mechanics in Harare. Filter by vehicle type, service, and location.',
+    title: 'Browse Car Mechanics | Makanika',
+    description: 'Browse and search for verified car mechanics in Harare. Filter by car type, service, and location.',
   },
 };
 

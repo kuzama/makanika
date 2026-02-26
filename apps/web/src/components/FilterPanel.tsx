@@ -16,10 +16,9 @@ interface FilterPanelProps {
 
 const VEHICLE_TYPES = [
   { value: 'CAR', label: 'Car' },
-  { value: 'TRUCK', label: 'Truck' },
-  { value: 'MOTORCYCLE', label: 'Motorcycle' },
-  { value: 'HEAVY_PLANT', label: 'Heavy Plant' },
-  { value: 'BUS', label: 'Bus' },
+  { value: 'SUV', label: 'SUV' },
+  { value: 'SEDAN', label: 'Sedan' },
+  { value: 'HATCHBACK', label: 'Hatchback' },
   { value: 'OTHER', label: 'Other' },
 ];
 

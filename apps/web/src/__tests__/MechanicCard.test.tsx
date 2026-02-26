@@ -12,7 +12,7 @@ const baseMechanic = {
   description: 'General auto repairs and diagnostics',
   priceRange: 'MODERATE' as const,
   verificationStatus: 'VERIFIED' as const,
-  vehicleTypes: ['CAR', 'TRUCK'],
+  vehicleTypes: ['CAR', 'SUV'],
   services: ['Oil Change', 'Brake Repair', 'Engine Diagnostics'],
   specialties: ['Toyota', 'Honda'],
   photos: [],

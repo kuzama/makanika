@@ -130,13 +130,13 @@ describe('Mechanic Routes', () => {
       prisma.mechanic.findMany.mockResolvedValue([]);
       prisma.mechanic.count.mockResolvedValue(0);
 
-      const res = await request(app).get('/api/mechanics?vehicleType=TRUCK');
+      const res = await request(app).get('/api/mechanics?vehicleType=SUV');
 
       expect(res.status).toBe(200);
       expect(prisma.mechanic.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
           where: expect.objectContaining({
-            vehicleTypes: { has: 'TRUCK' },
+            vehicleTypes: { has: 'SUV' },
           }),
         })
       );

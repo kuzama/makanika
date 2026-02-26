@@ -162,12 +162,12 @@ describe('MechanicService', () => {
       prismaMock.mechanic.findMany.mockResolvedValue([]);
       prismaMock.mechanic.count.mockResolvedValue(0);
 
-      await service.findAll({ page: 1, limit: 10, vehicleType: 'TRUCK' });
+      await service.findAll({ page: 1, limit: 10, vehicleType: 'SUV' });
 
       expect(prismaMock.mechanic.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
           where: expect.objectContaining({
-            vehicleTypes: { has: 'TRUCK' },
+            vehicleTypes: { has: 'SUV' },
           }),
         })
       );

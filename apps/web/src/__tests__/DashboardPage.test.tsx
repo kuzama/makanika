@@ -53,7 +53,7 @@ const mockMechanics = [
     longitude: 31.06,
     priceRange: 'BUDGET',
     verificationStatus: 'UNVERIFIED',
-    vehicleTypes: ['TRUCK'],
+    vehicleTypes: ['SUV'],
     services: [],
     specialties: [],
     photos: [],

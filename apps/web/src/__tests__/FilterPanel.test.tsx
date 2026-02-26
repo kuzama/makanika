@@ -25,10 +25,9 @@ describe('FilterPanel', () => {
   it('renders vehicle type checkboxes', () => {
     render(<FilterPanel onFilterChange={mockOnFilterChange} />);
     expect(screen.getByLabelText(/car/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/truck/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/motorcycle/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/heavy plant/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/bus/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/suv/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/sedan/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/hatchback/i)).toBeInTheDocument();
   });
 
   it('renders price range selector', () => {
@@ -69,12 +68,12 @@ describe('FilterPanel', () => {
     render(<FilterPanel onFilterChange={mockOnFilterChange} />);
 
     await user.click(screen.getByLabelText(/car/i));
-    await user.click(screen.getByLabelText(/truck/i));
+    await user.click(screen.getByLabelText(/suv/i));
 
     // Last call should have both
     const lastCall = mockOnFilterChange.mock.calls[mockOnFilterChange.mock.calls.length - 1][0];
     expect(lastCall.vehicleTypes).toContain('CAR');
-    expect(lastCall.vehicleTypes).toContain('TRUCK');
+    expect(lastCall.vehicleTypes).toContain('SUV');
   });
 
   it('calls onFilterChange when price range selected', async () => {

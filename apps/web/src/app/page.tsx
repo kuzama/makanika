@@ -13,8 +13,8 @@ export default function Home() {
             Find Trusted Mechanics<br />in Harare
           </h1>
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-6 md:mb-8">
-            Search verified mechanics by location, vehicle type, and speciality.
-            Read reviews, compare prices, and get your vehicle fixed by the best.
+            Search verified car mechanics by location, car type, and speciality.
+            Read reviews, compare prices, and get your car fixed by the best.
           </p>
           <Link
             href="/mechanics"
@@ -30,7 +30,7 @@ export default function Home() {
             <div className="text-4xl mb-4" aria-hidden="true">📍</div>
             <h2 className="text-xl font-semibold mb-2">Find Nearby</h2>
             <p className="text-gray-600">
-              Locate mechanics near you using our map-based search. Filter by distance and find the closest help.
+              Locate car mechanics near you using our map-based search. Filter by distance and find the closest help.
             </p>
           </div>
           <div className="bg-white rounded-xl p-6 md:p-8 shadow-md border border-gray-100">

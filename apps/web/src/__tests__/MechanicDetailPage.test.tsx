@@ -24,7 +24,7 @@ const mechanic = {
   description: 'General auto repairs and diagnostics. Specializing in Japanese vehicles.',
   priceRange: 'MODERATE' as const,
   verificationStatus: 'VERIFIED' as const,
-  vehicleTypes: ['CAR', 'TRUCK'],
+  vehicleTypes: ['CAR', 'SUV'],
   services: ['Oil Change', 'Brake Repair', 'Engine Diagnostics'],
   specialties: ['Toyota', 'Honda'],
   photos: [],
@@ -103,6 +103,6 @@ describe('MechanicDetail', () => {
   it('renders vehicle types', () => {
     render(<MechanicDetail mechanic={mechanic} />);
     expect(screen.getByText(/CAR/)).toBeInTheDocument();
-    expect(screen.getByText(/TRUCK/)).toBeInTheDocument();
+    expect(screen.getByText(/SUV/)).toBeInTheDocument();
   });
 });

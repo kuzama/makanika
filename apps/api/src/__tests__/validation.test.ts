@@ -59,7 +59,7 @@ describe('Zod Validation Schemas', () => {
         address: '123 Main St',
         description: 'Best garage in town',
         priceRange: 'MODERATE',
-        vehicleTypes: ['CAR', 'TRUCK'],
+        vehicleTypes: ['CAR', 'SUV'],
         services: ['Oil Change', 'Brake Repair'],
       });
       expect(result.success).toBe(true);

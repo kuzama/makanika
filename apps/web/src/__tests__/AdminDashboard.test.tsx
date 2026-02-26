@@ -28,7 +28,7 @@ const pendingMechanics = [
   },
   {
     id: 'mech-2',
-    businessName: 'Truck Masters',
+    businessName: 'SUV Specialists',
     phone: '+263772345678',
     verificationStatus: 'PENDING',
     verificationDocs: ['cert.pdf', 'id.pdf'],
@@ -77,7 +77,7 @@ describe('AdminDashboard', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Fix-It Garage')).toBeInTheDocument();
-      expect(screen.getByText('Truck Masters')).toBeInTheDocument();
+      expect(screen.getByText('SUV Specialists')).toBeInTheDocument();
     });
   });
 
@@ -116,7 +116,7 @@ describe('AdminDashboard', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Truck Masters')).toBeInTheDocument();
+      expect(screen.getByText('SUV Specialists')).toBeInTheDocument();
     });
 
     const rejectButtons = screen.getAllByRole('button', { name: /reject/i });

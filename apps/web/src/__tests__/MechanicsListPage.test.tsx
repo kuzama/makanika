@@ -51,15 +51,15 @@ const mechanicsList = {
     },
     {
       id: 'mech-2',
-      businessName: 'Truck Masters',
+      businessName: 'SUV Specialists',
       phone: '+263772345678',
       latitude: -17.83,
       longitude: 31.05,
       address: '456 Julius Nyerere Way',
-      description: 'Truck specialists',
+      description: 'SUV and crossover experts',
       priceRange: 'PREMIUM' as const,
       verificationStatus: 'UNVERIFIED' as const,
-      vehicleTypes: ['TRUCK'],
+      vehicleTypes: ['SUV'],
       services: ['Engine Overhaul'],
       specialties: ['Mercedes'],
       photos: [],
@@ -85,7 +85,7 @@ describe('MechanicsListPage', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Fix-It Garage')).toBeInTheDocument();
-      expect(screen.getByText('Truck Masters')).toBeInTheDocument();
+      expect(screen.getByText('SUV Specialists')).toBeInTheDocument();
     });
   });
 

@@ -50,13 +50,13 @@ describe('SearchFilters', () => {
   it('calls onFilter with combined filters', async () => {
     render(<SearchFilters onFilter={mockOnFilter} />);
 
-    await userEvent.selectOptions(screen.getByLabelText(/vehicle type/i), 'TRUCK');
+    await userEvent.selectOptions(screen.getByLabelText(/vehicle type/i), 'SUV');
     await userEvent.selectOptions(screen.getByLabelText(/price range/i), 'PREMIUM');
     await userEvent.click(screen.getByLabelText(/verified only/i));
     await userEvent.click(screen.getByRole('button', { name: /apply/i }));
 
     expect(mockOnFilter).toHaveBeenCalledWith({
-      vehicleType: 'TRUCK',
+      vehicleType: 'SUV',
       priceRange: 'PREMIUM',
       verifiedOnly: true,
     });

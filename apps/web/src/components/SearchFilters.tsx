@@ -47,10 +47,9 @@ export default function SearchFilters({ onFilter }: SearchFiltersProps) {
           >
             <option value="">All Types</option>
             <option value="CAR">Car</option>
-            <option value="TRUCK">Truck</option>
-            <option value="MOTORCYCLE">Motorcycle</option>
-            <option value="HEAVY_PLANT">Heavy Plant</option>
-            <option value="BUS">Bus</option>
+            <option value="SUV">SUV</option>
+            <option value="SEDAN">Sedan</option>
+            <option value="HATCHBACK">Hatchback</option>
             <option value="OTHER">Other</option>
           </select>
         </div>

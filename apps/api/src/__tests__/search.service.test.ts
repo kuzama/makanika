@@ -42,7 +42,7 @@ describe('SearchService', () => {
       verificationStatus: 'UNVERIFIED' as const,
       verificationDocs: [],
       verifiedAt: null,
-      vehicleTypes: ['TRUCK' as const, 'BUS' as const],
+      vehicleTypes: ['SUV' as const, 'SEDAN' as const],
       services: ['Engine Overhaul'],
       specialties: ['Mercedes'],
       photos: [],
@@ -79,7 +79,7 @@ describe('SearchService', () => {
       prismaMock.mechanic.count.mockResolvedValue(1);
 
       const result = await service.search({
-        vehicleType: 'TRUCK',
+        vehicleType: 'SUV',
         page: 1,
         limit: 10,
       });
@@ -88,7 +88,7 @@ describe('SearchService', () => {
       expect(prismaMock.mechanic.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
           where: expect.objectContaining({
-            vehicleTypes: { has: 'TRUCK' },
+            vehicleTypes: { has: 'SUV' },
           }),
         })
       );

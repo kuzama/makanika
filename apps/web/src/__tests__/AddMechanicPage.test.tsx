@@ -42,7 +42,7 @@ describe('AddMechanicPage', () => {
 
     render(<AddMechanicPage />);
 
-    expect(screen.getByText('Add a Mechanic')).toBeInTheDocument();
+    expect(screen.getByText('Add a Car Mechanic')).toBeInTheDocument();
     expect(screen.getByLabelText(/business name/i)).toBeInTheDocument();
   });
 

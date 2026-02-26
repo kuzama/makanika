@@ -25,7 +25,7 @@ export const createMechanicSchema = z.object({
   address: z.string().max(200).optional(),
   description: z.string().max(1000).optional(),
   priceRange: z.enum(['BUDGET', 'MODERATE', 'PREMIUM']).optional(),
-  vehicleTypes: z.array(z.enum(['CAR', 'TRUCK', 'MOTORCYCLE', 'HEAVY_PLANT', 'BUS', 'OTHER'])).optional(),
+  vehicleTypes: z.array(z.enum(['CAR', 'SUV', 'SEDAN', 'HATCHBACK', 'OTHER'])).optional(),
   services: z.array(z.string().max(50)).optional(),
   specialties: z.array(z.string().max(50)).optional(),
 });

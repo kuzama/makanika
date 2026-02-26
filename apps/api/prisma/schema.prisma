@@ -79,10 +79,9 @@ enum VerificationStatus {
 
 enum VehicleType {
   CAR
-  TRUCK
-  MOTORCYCLE
-  HEAVY_PLANT
-  BUS
+  SUV
+  SEDAN
+  HATCHBACK
   OTHER
 }
 
